@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Pokemons</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1>Pokemons: </h1>
+    <div class="container" id="pokemon-container"></div>
+
+
+<script>
+    const container = document.getElementById("pokemon-container");
+
+    async function getPokemons(page) {
+        try {
+            container.innerHTML = "Loading........";
+            const response = await fetch(`http://pokeapi.co/api/v2/pokemon/?limit=811`);
+            const data = await response.json();
+            container.innerHTML = "";
+            data.results.forEach(pokemon => {
+                const card = document.createElement("div");
+                card.className = "card";
+                card.innerHTML = `
+                <p>${pokemon.name}</p> <p>${pokemon.url}</p>
+                `;
+            });
+            container.appendChild(card);
+
+        } catch (error) {
+            console.error("Erro ao carregar os Pokemons", error);
+            container.innerHTML = "Erro ao carregar Pokemons";
+        }
+    }
+</script>
+</body>
+</html>
