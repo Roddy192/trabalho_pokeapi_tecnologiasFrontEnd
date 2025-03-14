@@ -1,0 +1,25 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #282c34;
+    color: #fff;
+}
+
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #61dafb;
+    color: #000;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

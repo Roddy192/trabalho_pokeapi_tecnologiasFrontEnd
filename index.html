@@ -17,7 +17,7 @@
     async function getPokemons(page) {
         try {
             container.innerHTML = "Loading........";
-            const response = await fetch(`http://pokeapi.co/api/v2/pokemon/?limit=60`);
+            const response = await fetch(`http://pokeapi.co/api/v2/pokemon/?limit=200`);
             const data = await response.json();
             container.innerHTML = "";
             data.results.forEach(pokemon => {
@@ -25,7 +25,8 @@
                 const card = document.createElement("div");
                 card.className = "card";
                 card.innerHTML = `
-                <p style="font-weight: bold; text-transform: uppercase";>${pokemon_name}</p> <button onclick="window.location.href='pokemon.html?name=${pokemon_name}'">VER</button>
+                <p style="font-weight: bold; text-transform: uppercase";>${pokemon_name}</p>
+                <button onclick="window.location.href='pokemon.html?name=${pokemon_name}'">VER</button>
                 `;
                 container.appendChild(card);
             });
