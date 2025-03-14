@@ -12,6 +12,7 @@
     <button onclick="window.history.back()">Voltar</button>
 
     <script>
+        
         async function getPokemonDetails() {
             const params = new URLSearchParams(window.location.search);
             const pokemon_name = params.get("name");

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +9,31 @@
 <body>
     <h1>Pokemons: </h1>
     <div class="container" id="pokemon-container"></div>
+    <div class="pagination">
+        <button id="prev">Anterior</button>
+        <span id="page-number"> Página 1</span>
+        <button id="next">Próximo</button>
+    </div>
+
 
 
 <script>
+    let currentPage = 1;
+    const limit = 20;
     const container = document.getElementById("pokemon-container");
+    const prevButton = document.getElementById("prev");
+    const nextButton = document.getElementById("next");
+    const pageNumber = document.getElementById("page-number");
 
     async function getPokemons(page) {
         try {
             container.innerHTML = "Loading........";
-            const response = await fetch(`http://pokeapi.co/api/v2/pokemon/?limit=200`);
+            const offset = (page -1) * limit;
+            const response = await fetch(`http://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
             const data = await response.json();
             container.innerHTML = "";
-            data.results.forEach(pokemon => {
+            data.results.forEach((pokemon, index) => {
+                const pokemonId = offset + index + 1;
                 const pokemon_name = pokemon.name;
                 const card = document.createElement("div");
                 card.className = "card";
@@ -30,6 +43,9 @@
                 `;
                 container.appendChild(card);
             });
+            pageNumber.textContent = `Página ${currentPage}`;
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = !data.next;
             
 
         } catch (error) {
@@ -37,7 +53,21 @@
             container.innerHTML = "Erro ao carregar Pokemons";
         }
     }
-    getPokemons()
+
+    prevButton.addEventListener("click", () => {
+            if (currentPage > 1) {
+                currentPage -= 1;
+                getPokemons(currentPage);
+            }
+        });
+
+        nextButton.addEventListener("click", () => {
+            currentPage += 1;
+            getPokemons(currentPage);
+        });
+
+
+    document.addEventListener("DOMContentLoaded", () => getPokemons(currentPage));
 </script>
 </body>
 </html>
